@@ -714,21 +714,29 @@ void Task_SF_BUMPER_Detection(void)
             bumper_cnt = 0;
         }
     }
+    // else
+    // {
+    //     bumper_cnt = 0;
+    // }
     else
     {
-        bumper_cnt = 0;
+        if(prev_bumper == 0)
+        {
+            bumper_cnt++;
+            if(bumper_cnt > BUMPER_ENSURE_CNT)
+            {
+                _mboard.safety_result.safety_state_bumper_stop_detected = 0; 
+            }
+        }
+        else
+        {
+            bumper_cnt = 0;
+        }
     }
+
+
 
     prev_bumper = BUMPER_TRIGGER;
-
-    
-    // if you want to immediately recover from bumper stop state, you can use the below code
-    
-    else
-    {
-        safety_state_bumper_stop_deteceted = 0;
-    }
-    
 }
 
 void Task_SF_RESET_IO_Detection(void)

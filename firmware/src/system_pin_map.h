@@ -88,7 +88,7 @@
 #define             PORT_BUMP_1_A           PORTEbits.RE0
 #define             PORT_BUMP_1_C           PORTAbits.RA4
 #define             PORT_BUMP_1_E           PORTAbits.RA0
-#define             PORT_BUMP_1_G           PORTAGbits.RG1
+#define             PORT_BUMP_1_G           PORTGbits.RG1
 
 #define             PORT_BUMP_2_B           PORTAbits.RA7
 #define             PORT_BUMP_2_D           PORTCbits.RC2
