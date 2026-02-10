@@ -1443,11 +1443,11 @@ unsigned char getBumperSwitch(void)
     //if bumpper switch is pressed, it will retrun high       
     if(_mboard.type == MCU_0)
     {
-        return (!PORT_BUMP_1_A) | (!PORT_BUMP_2_A) | (!PORT_BUMP_3_A) | (!PORT_BUMP_4_A);
+        return (!PORT_BUMP_1_A) | (!PORT_BUMP_1_C) | (!PORT_BUMP_1_E) | (!PORT_BUMP_1_G);
     }
     else
     {   
-        return (!PORT_BUMP_1_B) | (!PORT_BUMP_2_B) | (!PORT_BUMP_3_B) | (!PORT_BUMP_4_B);
+        return (!PORT_BUMP_2_B) | (!PORT_BUMP_2_D) | (!PORT_BUMP_2_F) | (!PORT_BUMP_2_H);
     }
 
 }   
