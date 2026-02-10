@@ -701,26 +701,33 @@ void Task_SF_BUMPER_Detection(void)
 
     if(BUMPER_TRIGGER == 1)
     {
-        if(prev_bumper == 1){
+        if(prev_bumper == 1)
+        {
             bumper_cnt++;
-            if(bumper_cnt > BUMPER_ENSURE_CNT){
+            if(bumper_cnt > BUMPER_ENSURE_CNT)
+            {
                 _mboard.safety_result.safety_state_bumper_stop_detected = 1;
             }
-        }else{
+        }
+        else
+        {
             bumper_cnt = 0;
         }
-    }else{
+    }
+    else
+    {
         bumper_cnt = 0;
     }
+
     prev_bumper = BUMPER_TRIGGER;
 
     
     // if you want to immediately recover from bumper stop state, you can use the below code
     
-    // else
-    // {
-    //     safety_state_bumper_stop_deteceted = 0;
-    // }
+    else
+    {
+        safety_state_bumper_stop_deteceted = 0;
+    }
     
 }
 
@@ -1436,13 +1443,11 @@ unsigned char getBumperSwitch(void)
     //if bumpper switch is pressed, it will retrun high       
     if(_mboard.type == MCU_0)
     {
-//        return !(PORTEbits.RE0);
-        return (PORTEbits.RE0);
+        return (!PORT_BUMP_1_A) | (!PORT_BUMP_2_A) | (!PORT_BUMP_3_A) | (!PORT_BUMP_4_A);
     }
     else
     {   
-//        return !(PORTAbits.RA7);
-        return (PORTAbits.RA7);
+        return (!PORT_BUMP_1_B) | (!PORT_BUMP_2_B) | (!PORT_BUMP_3_B) | (!PORT_BUMP_4_B);
     }
 
 }   

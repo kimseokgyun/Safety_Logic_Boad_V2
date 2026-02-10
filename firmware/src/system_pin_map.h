@@ -84,7 +84,16 @@
 #define             PORT_EMO_3_B          PORTBbits.RB5
 #define             PORT_EMO_4_B          PORTEbits.RE9
 
+//BUMPER
+#define             PORT_BUMP_1_A           PORTEbits.RE0
+#define             PORT_BUMP_1_C           PORTAbits.RA4
+#define             PORT_BUMP_1_E           PORTAbits.RA0
+#define             PORT_BUMP_1_G           PORTAGbits.RG1
 
+#define             PORT_BUMP_2_B           PORTAbits.RA7
+#define             PORT_BUMP_2_D           PORTCbits.RC2
+#define             PORT_BUMP_2_F           PORTCbits.RC4
+#define             PORT_BUMP_2_H           PORTGbits.RG6
 
 // FET
 #define             TRIS_MOTOR_PRE_FET_A    TRISEbits.TRISE9
