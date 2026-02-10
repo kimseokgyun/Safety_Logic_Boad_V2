@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group/>
+        <group name="Group_FunctionalSafety">
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/interrupts.c</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/system_general_configuration.h</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/function_task.h</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/function_initialization.c</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/main.c</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/function_task.c</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/function_initialization.h</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/system_pin_map.h</file>
+            <file>file:/C:/code/SafetyLogic_V2/firmware/src/function_can.c</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,25 @@
+# Build and distribution folders
+**/build/
+**/dist/
+**/debug/
+
+# MPLAB X generated files
+**/.generated_files/
+**/defmplabxtrace.log
+**/defmplabxtrace.log.inx
+**/Makefile
+
+# Project specific build folders
+firmware/__SafetyBoard_V2_1_250621.X/build/
+firmware/__SafetyBoard_V2_1_250621.X/dist/
+firmware/__SafetyBoard_V2_1_250621.X/debug/
+firmware/__SafetyBoard_V2_1_250621.X/.generated_files/
+firmware/__SafetyBoard_V2_1_250621.X/defmplabxtrace.log
+firmware/__SafetyBoard_V2_1_250621.X/defmplabxtrace.log.inx
+firmware/__SafetyBoard_V2_1_250621.X/Makefile
+
+# Report files
+firmware/__SafetyBoard_V2_1_250621.X/report/
+
+# Queue logs
+firmware/__SafetyBoard_V2_1_250621.X/queuelogs/
