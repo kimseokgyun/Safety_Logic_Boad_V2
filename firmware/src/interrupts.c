@@ -22,11 +22,11 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
     static unsigned int tmr2_cnt = 0;
     tmr2_cnt++;
     
-    // if(tmr2_cnt%10 == 0)
-    // {
-    //     LATS_LED_1 ^= 1;
-    //     LATS_LED_2 ^= 1;
-    // }
+    if(tmr2_cnt%10 == 0)
+    {
+        // LATS_LED_1 ^= 1;
+        LATS_LED_2 ^= 1;
+    }
     if(_mboard.safety_result.safety_state_emo_pressed == 1)
     {
         LATS_LED_1 = 0;

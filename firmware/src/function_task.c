@@ -1086,11 +1086,11 @@ unsigned char GetState_EMO()
 //    return ((!PORT_EMO_A) & (!PORT_EMO_B));
     if(_mboard.type == MCU_0)
     {
-        return PORT_EMO_1_A | PORT_EMO_2_A | PORT_EMO_3_A | PORT_EMO_4_A;
+        return (!PORT_EMO_1_A) | (!PORT_EMO_2_A) | (!PORT_EMO_3_A) | (!PORT_EMO_4_A);
     }
     else
     {
-        return PORT_EMO_1_B | PORT_EMO_2_B | PORT_EMO_3_B | PORT_EMO_4_B;
+        return (!PORT_EMO_1_B) | (!PORT_EMO_2_B) | (!PORT_EMO_3_B) | (!PORT_EMO_4_B);
     }
 }
 
