@@ -170,7 +170,8 @@ void __ISR(_CHANGE_NOTICE_C_VECTOR, IPL6AUTO) CNC_Handler(void)
 }
 
 
-void __ISR(_CHANGE_NOTICE_D_VECTOR, IPL6AUTO) CND_Handler(void){
+void __ISR(_CHANGE_NOTICE_D_VECTOR, IPL6AUTO) CND_Handler(void)
+{
     if(_mboard.type == MCU_1)
     {
         if(PORTDbits.RD5 == 0)
