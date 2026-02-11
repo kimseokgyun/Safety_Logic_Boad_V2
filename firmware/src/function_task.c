@@ -631,10 +631,7 @@ void Task_SF_STO(void)
 {
     if(_mboard.safety_result.cmd_sto == 1)
     {   
-
-        //For test
-        Task_Control_Main_FET_On();
-
+        
         _mboard.safety_result.cmd_sto = 0;
         _mboard.safety_result.cmd_power_off = 1;
         

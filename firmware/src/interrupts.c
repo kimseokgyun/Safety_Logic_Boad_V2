@@ -13,6 +13,13 @@ typedef enum
 
 int STATE = STATE_IDLE;
 
+/* ===== [TEST CODE START] EMO→FET 1회 실행 테스트 ===== */
+static unsigned char test_emo_prev  = 0;
+static unsigned char test_fet_run   = 0;  // 0=대기, 1=실행중, 2=완료
+static unsigned char test_fet_state = 0;  // 0=PRE_ON, 1=MAIN_ON, 2=PRE_OFF, 3=DONE
+static unsigned int  test_fet_cnt   = 0;
+/* ===== [TEST CODE END] ===== */
+
 /*******************************************************************************
  * Timer 2 Interrupt
  ******************************************************************************/
@@ -27,20 +34,76 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
         // LATS_LED_1 ^= 1;
         LATS_LED_2 ^= 1;
     }
-    if(_mboard.safety_result.safety_state_bumper_stop_detected == 1)
+    if(_mboard.safety_result.safety_state_emo_pressed == 1)
     {
         LATS_LED_1 = 0;
+
+        /* ===== [TEST CODE START] EMO rising edge → FET 1회 트리거 ===== */
+        if(test_emo_prev == 0)
+        {
+            test_fet_run   = 1;
+            test_fet_state = 0;
+            test_fet_cnt   = 0;
+        }
+        /* ===== [TEST CODE END] ===== */
     }
     else
     {
         LATS_LED_1 = 1;
+
+        /* ===== [TEST CODE START] EMO falling edge → FET OFF ===== */
+        if(test_emo_prev == 1)
+        {
+            Task_Control_Pre_FET_Off();
+            Task_Control_Main_FET_Off();
+            test_fet_run   = 0;
+            test_fet_state = 0;
+            test_fet_cnt   = 0;
+        }
+        /* ===== [TEST CODE END] ===== */
     }
-    
+    /* ===== [TEST CODE START] prev 갱신 ===== */
+    test_emo_prev = _mboard.safety_result.safety_state_emo_pressed;
+    /* ===== [TEST CODE END] ===== */
+
+    /* ===== [TEST CODE START] FET 시퀀스 1회 실행 ===== */
+    if(test_fet_run == 1)
+    {
+        switch(test_fet_state)
+        {
+            case 0: // PRE_ON
+                Task_Control_Pre_FET_On();
+                test_fet_cnt++;
+                if(_mboard.type == MCU_0) {
+                    if(test_fet_cnt >= 2) { test_fet_cnt = 0; test_fet_state = 1; }  // 20ms
+                } else {
+                    if(test_fet_cnt >= 6) { test_fet_cnt = 0; test_fet_state = 1; }  // 60ms
+                }
+                break;
+            case 1: // MAIN_ON
+                Task_Control_Main_FET_On();
+                test_fet_cnt++;
+                if(test_fet_cnt >= 5) { test_fet_cnt = 0; test_fet_state = 2; }  // 50ms
+                break;
+            case 2: // PRE_OFF
+                Task_Control_Pre_FET_Off();
+                test_fet_cnt++;
+                if(test_fet_cnt >= 5) { test_fet_cnt = 0; test_fet_state = 3; }  // 50ms
+                break;
+            case 3: // DONE - MAIN 유지, 1회 완료
+                Task_Control_Main_FET_On();
+                Task_Control_Pre_FET_Off();
+                test_fet_run = 2;
+                break;
+        }
+    }
+    /* ===== [TEST CODE END] ===== */
+
     Task_ADC_Measure();
     Task_Lidar_Handler();
-    
+
     Task_SF_Total();
-    
+
     Task_Power_Handler();
     Task_IO_Handler();
     
