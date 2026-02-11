@@ -174,7 +174,7 @@ void Task_Power_Handler(void)
         #endif
     }
     
-    // check SF state    
+    // check SF state
     if(_mboard.sensor.emo_pressed == 1)
     {
         try_power_on = 0;
@@ -195,83 +195,85 @@ void Task_Power_Handler(void)
     }
     
     
-    // MOTOR FET CONTROL 
-    switch(POWER_STATE)
-    {
-        case POWER_STATE_OFF:
-            Task_Control_Pre_FET_Off();
-            Task_Control_Main_FET_Off();
-            power_motor_cnt = 0;
-            break;
-            
-        case POWER_STATE_PRE_WAIT:
-            if(_mboard.type == MCU_0)
-            {
-                // bypass
-                power_motor_cnt = 0;
-                POWER_STATE = POWER_STATE_PRE_ON;
-            }
-            else
-            {
-                // wait until MCU 0 turn on the FET first (30cnt = 300ms)
-                power_motor_cnt++;
-                if(power_motor_cnt >= 30)
-                {
-                    power_motor_cnt = 0;
-                    POWER_STATE = POWER_STATE_PRE_ON;
-                }
-            }
-            break;
-            
-        case POWER_STATE_PRE_ON:
-            Task_Control_Pre_FET_On();
-            power_motor_cnt++;
-            if(_mboard.type == MCU_0)
-            {
-                if(power_motor_cnt >= 2)
-                {
-                    power_motor_cnt = 0;
-                    POWER_STATE = POWER_STATE_MAIN_ON;
-                }                
-            }
-            else
-            {
-                if(power_motor_cnt >= 6)  // 6cnt = 60ms
-                {
-                    power_motor_cnt = 0;
-                    POWER_STATE = POWER_STATE_MAIN_ON;
-                }                
-            }
-            break;
-            
-        case POWER_STATE_MAIN_ON:
-            Task_Control_Main_FET_On();
-            power_motor_cnt++;
-            if(power_motor_cnt >= 5)  // 5cnt = 50ms
-            {
-                power_motor_cnt = 0;
-                POWER_STATE = POWER_STATE_PRE_OFF;
-            }
-            break;
-            
-        case POWER_STATE_PRE_OFF:
-            Task_Control_Pre_FET_Off();
-            power_motor_cnt++;
-            if(power_motor_cnt >= 5)  // 5cnt = 50ms
-            {
-                power_motor_cnt = 0;
-                POWER_STATE = POWER_STATE_ON;
-            }
-            break;
-            
-        case POWER_STATE_ON:
-            Task_Control_Main_FET_On();
-            Task_Control_Pre_FET_Off();
-            break;
-            
-        default:
-            break;
-    }
+    /* ===== [TEST CODE START] MOTOR FET CONTROL switch문 주석처리 ===== */
+//    // MOTOR FET CONTROL
+//    switch(POWER_STATE)
+//    {
+//        case POWER_STATE_OFF:
+//            Task_Control_Pre_FET_Off();
+//            Task_Control_Main_FET_Off();
+//            power_motor_cnt = 0;
+//            break;
+//
+//        case POWER_STATE_PRE_WAIT:
+//            if(_mboard.type == MCU_0)
+//            {
+//                // bypass
+//                power_motor_cnt = 0;
+//                POWER_STATE = POWER_STATE_PRE_ON;
+//            }
+//            else
+//            {
+//                // wait until MCU 0 turn on the FET first (30cnt = 300ms)
+//                power_motor_cnt++;
+//                if(power_motor_cnt >= 30)
+//                {
+//                    power_motor_cnt = 0;
+//                    POWER_STATE = POWER_STATE_PRE_ON;
+//                }
+//            }
+//            break;
+//
+//        case POWER_STATE_PRE_ON:
+//            Task_Control_Pre_FET_On();
+//            power_motor_cnt++;
+//            if(_mboard.type == MCU_0)
+//            {
+//                if(power_motor_cnt >= 2)
+//                {
+//                    power_motor_cnt = 0;
+//                    POWER_STATE = POWER_STATE_MAIN_ON;
+//                }
+//            }
+//            else
+//            {
+//                if(power_motor_cnt >= 6)  // 6cnt = 60ms
+//                {
+//                    power_motor_cnt = 0;
+//                    POWER_STATE = POWER_STATE_MAIN_ON;
+//                }
+//            }
+//            break;
+//
+//        case POWER_STATE_MAIN_ON:
+//            Task_Control_Main_FET_On();
+//            power_motor_cnt++;
+//            if(power_motor_cnt >= 5)  // 5cnt = 50ms
+//            {
+//                power_motor_cnt = 0;
+//                POWER_STATE = POWER_STATE_PRE_OFF;
+//            }
+//            break;
+//
+//        case POWER_STATE_PRE_OFF:
+//            Task_Control_Pre_FET_Off();
+//            power_motor_cnt++;
+//            if(power_motor_cnt >= 5)  // 5cnt = 50ms
+//            {
+//                power_motor_cnt = 0;
+//                POWER_STATE = POWER_STATE_ON;
+//            }
+//            break;
+//
+//        case POWER_STATE_ON:
+//            Task_Control_Main_FET_On();
+//            Task_Control_Pre_FET_Off();
+//            break;
+//
+//        default:
+//            break;
+//    }
+    /* ===== [TEST CODE END] ===== */
     
     
     // do lift power action
