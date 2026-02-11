@@ -62,6 +62,7 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
         }
         /* ===== [TEST CODE END] ===== */
     }
+    
     /* ===== [TEST CODE START] prev 갱신 ===== */
     test_emo_prev = _mboard.safety_result.safety_state_emo_pressed;
     /* ===== [TEST CODE END] ===== */
@@ -74,21 +75,17 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
             case 0: // PRE_ON
                 Task_Control_Pre_FET_On();
                 test_fet_cnt++;
-                if(_mboard.type == MCU_0) {
-                    if(test_fet_cnt >= 2) { test_fet_cnt = 0; test_fet_state = 1; }  // 20ms
-                } else {
-                    if(test_fet_cnt >= 6) { test_fet_cnt = 0; test_fet_state = 1; }  // 60ms
-                }
+                if(test_fet_cnt >= 50) { test_fet_cnt = 0; test_fet_state = 1; }  // 500ms (TMR=300ms 대기)
                 break;
             case 1: // MAIN_ON
                 Task_Control_Main_FET_On();
                 test_fet_cnt++;
-                if(test_fet_cnt >= 5) { test_fet_cnt = 0; test_fet_state = 2; }  // 50ms
+                if(test_fet_cnt >= 10) { test_fet_cnt = 0; test_fet_state = 2; }  // 100ms
                 break;
             case 2: // PRE_OFF
                 Task_Control_Pre_FET_Off();
                 test_fet_cnt++;
-                if(test_fet_cnt >= 5) { test_fet_cnt = 0; test_fet_state = 3; }  // 50ms
+                if(test_fet_cnt >= 10) { test_fet_cnt = 0; test_fet_state = 3; }  // 100ms
                 break;
             case 3: // DONE - MAIN 유지, 1회 완료
                 Task_Control_Main_FET_On();
