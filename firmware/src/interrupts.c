@@ -29,15 +29,24 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
     static unsigned int tmr2_cnt = 0;
     tmr2_cnt++;
     
-    if(tmr2_cnt%10 == 0)
-    {
-        // LATS_LED_1 ^= 1;
-        LATS_LED_2 ^= 1;
-    }
+
+    // if(tmr2_cnt%10 == 0)
+    // {
+    //     // LATS_LED_1 ^= 1;
+    //     LATS_LED_2 ^= 1;
+    // }
+    // if(_mboard.safety_result.safety_state_emo_pressed == 1)
+    // {
+    //     LATS_LED_1 = 0;
+    // }
+    // else
+    // {
+    //     LATS_LED_1 = 1;
+    // }
+    
+
     if(_mboard.safety_result.safety_state_emo_pressed == 1)
     {
-        LATS_LED_1 = 0;
-
         /* ===== [TEST CODE START] EMO rising edge → FET 1회 트리거 ===== */
         if(test_emo_prev == 0)
         {
@@ -49,8 +58,6 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
     }
     else
     {
-        LATS_LED_1 = 1;
-
         /* ===== [TEST CODE START] EMO falling edge → FET OFF ===== */
         if(test_emo_prev == 1)
         {
@@ -72,22 +79,26 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
     {
         switch(test_fet_state)
         {
-            case 0: // PRE_ON
+            case 0: // PRE_ON — LED: 둘 다 OFF (0번)
+                LATS_LED_1 = 1; LATS_LED_2 = 1;
                 Task_Control_Pre_FET_On();
                 test_fet_cnt++;
                 if(test_fet_cnt >= 50) { test_fet_cnt = 0; test_fet_state = 1; }  // 500ms (TMR=300ms 대기)
                 break;
-            case 1: // MAIN_ON
+            case 1: // MAIN_ON — LED: LED1만 ON (1번)
+                LATS_LED_1 = 0; LATS_LED_2 = 1;
                 Task_Control_Main_FET_On();
                 test_fet_cnt++;
                 if(test_fet_cnt >= 10) { test_fet_cnt = 0; test_fet_state = 2; }  // 100ms
                 break;
-            case 2: // PRE_OFF
+            case 2: // PRE_OFF — LED: LED2만 ON (2번)
+                LATS_LED_1 = 1; LATS_LED_2 = 0;
                 Task_Control_Pre_FET_Off();
                 test_fet_cnt++;
                 if(test_fet_cnt >= 10) { test_fet_cnt = 0; test_fet_state = 3; }  // 100ms
                 break;
-            case 3: // DONE - MAIN 유지, 1회 완료
+            case 3: // DONE — LED: 둘 다 ON (3번)
+                LATS_LED_1 = 0; LATS_LED_2 = 0;
                 Task_Control_Main_FET_On();
                 Task_Control_Pre_FET_Off();
                 test_fet_run = 2;
