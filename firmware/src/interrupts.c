@@ -102,8 +102,13 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
             {
                 case 0: // PRE_ON — LED: 둘 다 OFF (0번)
                     LATS_LED_1 = 1; LATS_LED_2 = 1;
-                    Task_Control_Pre_FET_On();
-                    
+
+                    if(_mboard.type == MCU_0)
+                    {
+                        Task_Control_Pre_FET_On();
+                    }
+
+
                     if(_mboard.type == MCU_1)
                     {
                         Task_Control_Lift_Pre_FET_On();
@@ -114,8 +119,11 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
                     break;
                 case 1: // MAIN_ON — LED: LED1만 ON (1번)
                     LATS_LED_1 = 0; LATS_LED_2 = 1;
-                    Task_Control_Main_FET_On();
                     
+                    if(_mboard.type == MCU_0)
+                    {
+                        Task_Control_Main_FET_On();
+                    }
                     if(_mboard.type == MCU_1)
                     {
                         Task_Control_Lift_Main_FET_On();
@@ -138,9 +146,12 @@ void __ISR(_TIMER_2_VECTOR, ipl5AUTO) Handler_TMR_2(void)
                     break;
                 case 3: // DONE — LED: 둘 다 ON (3번)
                     LATS_LED_1 = 0; LATS_LED_2 = 0;
-                    Task_Control_Main_FET_On();
+
+                    if(_mboard.type == MCU_0)
+                    {
+                        Task_Control_Main_FET_On();
 //                    Task_Control_Pre_FET_Off();
-                    
+                    }
                     if(_mboard.type == MCU_1)
                     {
                         Task_Control_Lift_Main_FET_On();
