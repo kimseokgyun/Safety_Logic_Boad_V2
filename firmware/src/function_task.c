@@ -288,61 +288,61 @@ void Task_Power_Handler(void)
     
     
     // LIFT POWWER CONTORL
-    if(_mboard.type == MCU_1)
-    {
-        switch(LIFT_POWER_STATE)
-        {
-            case POWER_STATE_OFF:
-                Task_Control_Lift_Pre_FET_Off();
-                Task_Control_Lift_Main_FET_Off();
-                power_lift_cnt = 0;
-                break;
-
-            case POWER_STATE_PRE_WAIT:
-                // bypass
-                power_lift_cnt = 0;
-                LIFT_POWER_STATE = POWER_STATE_PRE_ON;
-                break;
-
-            case POWER_STATE_PRE_ON:
-                Task_Control_Lift_Pre_FET_On();
-                power_lift_cnt++;
-                if(power_lift_cnt >= 6)  // 6cnt = 60ms
-                {
-                    power_lift_cnt = 0;
-                    LIFT_POWER_STATE = POWER_STATE_MAIN_ON;
-                }
-                break;
-
-            case POWER_STATE_MAIN_ON:
-                Task_Control_Lift_Main_FET_On();
-                power_lift_cnt++;
-                if(power_lift_cnt >= 5)  // 5cnt = 50ms
-                {
-                    power_lift_cnt = 0;
-                    LIFT_POWER_STATE = POWER_STATE_PRE_OFF;
-                }
-                break;
-
-            case POWER_STATE_PRE_OFF:
-                Task_Control_Lift_Pre_FET_Off();
-                power_lift_cnt++;
-                if(power_lift_cnt >= 5)  // 5cnt = 50ms
-                {
-                    power_lift_cnt = 0;
-                    LIFT_POWER_STATE = POWER_STATE_ON;
-                }
-                break;
-
-            case POWER_STATE_ON:
-                Task_Control_Lift_Main_FET_On();
-                Task_Control_Lift_Pre_FET_Off();
-                break;
-
-            default:
-                break;
-        }
-    }
+//    if(_mboard.type == MCU_1)
+//    {
+//        switch(LIFT_POWER_STATE)
+//        {
+//            case POWER_STATE_OFF:
+//                Task_Control_Lift_Pre_FET_Off();
+//                Task_Control_Lift_Main_FET_Off();
+//                power_lift_cnt = 0;
+//                break;
+//
+//            case POWER_STATE_PRE_WAIT:
+//                // bypass
+//                power_lift_cnt = 0;
+//                LIFT_POWER_STATE = POWER_STATE_PRE_ON;
+//                break;
+//
+//            case POWER_STATE_PRE_ON:
+//                Task_Control_Lift_Pre_FET_On();
+//                power_lift_cnt++;
+//                if(power_lift_cnt >= 6)  // 6cnt = 60ms
+//                {
+//                    power_lift_cnt = 0;
+//                    LIFT_POWER_STATE = POWER_STATE_MAIN_ON;
+//                }
+//                break;
+//
+//            case POWER_STATE_MAIN_ON:
+//                Task_Control_Lift_Main_FET_On();
+//                power_lift_cnt++;
+//                if(power_lift_cnt >= 5)  // 5cnt = 50ms
+//                {
+//                    power_lift_cnt = 0;
+//                    LIFT_POWER_STATE = POWER_STATE_PRE_OFF;
+//                }
+//                break;
+//
+//            case POWER_STATE_PRE_OFF:
+//                Task_Control_Lift_Pre_FET_Off();
+//                power_lift_cnt++;
+//                if(power_lift_cnt >= 5)  // 5cnt = 50ms
+//                {
+//                    power_lift_cnt = 0;
+//                    LIFT_POWER_STATE = POWER_STATE_ON;
+//                }
+//                break;
+//
+//            case POWER_STATE_ON:
+//                Task_Control_Lift_Main_FET_On();
+//                Task_Control_Lift_Pre_FET_Off();
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
 }
 
 
